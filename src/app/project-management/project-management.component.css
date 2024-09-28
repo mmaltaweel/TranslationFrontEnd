@@ -1,0 +1,25 @@
+.p-element
+.p-fluid
+.p-dialog
+.p-component
+.p-dialog-draggable
+.p-dialog-resizable
+.ng-star-inserted {
+    width: 49rem;
+    z-index: 1102;
+    height: 100rem;
+}
+
+:host ::ng-deep  .p-dialog {
+    display: flex;
+    flex-direction: column;
+    pointer-events: auto;
+    max-height: 99%;
+    transform: scale(1);
+    position: relative;
+    width: 50rem !important;
+    height: 51rem;
+}
+:host ::ng-deep  .p-field{
+  padding-bottom: 1rem;
+}

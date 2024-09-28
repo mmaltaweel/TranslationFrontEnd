@@ -1,0 +1,142 @@
+<p-toast></p-toast>
+
+<div class="card">
+    <p-toolbar styleClass="p-mb-4">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2"
+                (click)="openNew()"></button>
+        </ng-template>
+    </p-toolbar>
+
+    <p-table #dt [loading]="loading" [value]="projects" [paginator]="true" [lazy]="true" [rows]="rows" [totalRecords]="totalRecords" (onLazyLoad)="getProjects($event)"
+        [globalFilterFields]="['name','country.name','representative.name','status']" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [expandedRowKeys]="expandedRows" (onRowExpand)="onRowExpand($event)" (onRowCollapse)="onRowCollapse($event)"
+        [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
+                <th pSortableColumn="startDate">Start Date <p-sortIcon field="startDate"></p-sortIcon></th>
+                <th pSortableColumn="endDate">End Date <p-sortIcon field="endDate"></p-sortIcon></th>
+                <th pSortableColumn="description">Description <p-sortIcon field="description"></p-sortIcon></th>
+
+                <th pSortableColumn="statusDisplayName">Status <p-sortIcon field="statusDisplayName"></p-sortIcon></th>
+                <th pSortableColumn="progress">Progress <p-sortIcon field="progress"></p-sortIcon></th>
+
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-project let-expanded="expanded">
+            <tr>
+                <td>
+                    <p-button type="button" pRipple [pRowToggler]="project" [text]="true" [rounded]="true" [plain]="true" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" />
+                </td>
+                <td>{{project.name}}</td>
+                <td>{{ project.startDate | date:'shortDate' }}</td>
+                <td>{{ project.endDate | date:'shortDate' }}</td>
+                <td>{{project.description}}</td>
+                <td>
+                    <p-tag [value]="project.statusDisplayName" [severity]="getSeverity(project.statusDisplayName)" />
+                </td>
+                <td>
+                    <p-progressBar [value]="project.progress" [showValue]="false" />
+                </td>
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"
+                        (click)="editProject(project)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                        (click)="deleteProject(project)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="rowexpansion" let-project>
+            <tr>
+                <td colspan="7">
+                    <div class="p-3">
+                        <p-table [value]="project.tasks" dataKey="id">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th pSortableColumn="id">Id <p-sortIcon field="id" /></th>
+                                    <th pSortableColumn="title">Title <p-sortIcon field="title" /></th>
+                                    <th pSortableColumn="description">Description <p-sortIcon field="description" /></th>
+                                    <th pSortableColumn="dueDate">DueDate <p-sortIcon field="dueDate" /></th>
+                                    <th pSortableColumn="assignedTranslatorId">Assigned Translato <p-sortIcon field="assignedTranslatorId" /></th>
+                                    <th pSortableColumn="statusDisplayName">Status <p-sortIcon field="statusDisplayName"></p-sortIcon></th>
+
+                                    <th style="width: 4rem"></th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-task>
+                                <tr>
+                                    <td>{{ task.id }}</td>
+                                    <td>{{ task.title }}</td>
+                                    <td>{{ task.description }}</td>
+                                    <td>{{ task.dueDate | date:'shortDate' }}</td>
+                                    <td>{{ task.assignedTranslatorId }}</td>
+                                    <td>
+                                        <p-tag [value]="task.statusDisplayName" [severity]="getSeverity(task.statusDisplayName)" />
+                                    </td>
+                                    <td><p-button type="button" icon="pi pi-search" /></td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="emptymessage">
+                                <tr>
+                                    <td colspan="6">There are no task for this project yet.</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                In total there are {{projects ? totalRecords : 0 }} projects.
+            </div>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-dialog [(visible)]="projectDialog" [style]="{width: '450px'}" header="Project Details" [modal]="true"
+    styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="p-field">
+            <label for="name">Name</label>
+            <input type="text" pInputText id="name" [(ngModel)]="project.name" required autofocus />
+            <small class="p-invalid" *ngIf="submitted && (!project.name || project.name.trim() === '')">
+                name is required.
+              </small>
+        </div>
+        <div class="p-field">
+            <label for="description">Description</label>
+            <textarea id="description" pInputTextarea [(ngModel)]="project.description" required rows="3"
+                cols="20"></textarea>
+                <small class="p-invalid" *ngIf="submitted && (!project.description || project.description.trim() === '')">
+                    description is required.
+                  </small>
+        </div>
+        <div class="p-formgrid p-grid">
+            <div class="p-field p-col">
+                <label for="startDate">Start Date</label>
+                <p-calendar required dateFormat="dd-mm-yy" appendTo="body" id="startDate" [(ngModel)]="project.startDate" inputId="icon"></p-calendar>
+                <small class="p-invalid" *ngIf="submitted && !project.startDate && !isValidDate(project.startDate)">startDate is required.</small>
+            </div>
+            <div class="p-field p-col">
+                <label for="endDate">End Date</label>
+                <p-calendar required dateFormat="dd-mm-yy" id="endDate" [(ngModel)]="project.endDate" inputId="icon"></p-calendar>
+                <small class="p-invalid" *ngIf="submitted && !project.endDate && !isValidDate(project.endDate)">endDate is required.</small>
+
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProject()"></button>
+    </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

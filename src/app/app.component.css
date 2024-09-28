@@ -1,0 +1,18 @@
+.logocontainer{
+    display: flex;
+    position: fixed;
+    left: 4rem;
+    top: 37rem;
+    width: 5rem;
+    height: 3rem;
+    left: 2rem;
+    float: left;
+    bottom: 4rem;
+}
+.logoimg{
+    display: block;
+    position: relative;
+    width: 16rem;
+    height: 10rem;
+    top: 1.5rem;
+}

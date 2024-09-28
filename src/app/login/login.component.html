@@ -1,0 +1,25 @@
+<div>
+  <div class="logocontainer">
+    <img class="logoimg" alt="logo"
+        src="https://localizely.com/_next/static/chunks/images/translation-management-system-ab5f22777b55981bdbf8eeac21162ee8.png">
+
+</div>
+  <div class="login-left">
+    <h2>Login! 👋</h2>
+    <p>How do I get started?</p>
+    <p> Login with User Name</p>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <label for="username">Username</label>
+      <input type="username" id="username" name="username" formControlName="username" placeholder="Username">
+      <label for="password">Password</label>
+      <input formControlName="password" type="password" id="password" name="password" placeholder="******">
+      <button type="submit" class="btn btn-signin">Sign In</button>
+    </form>
+    <div *ngIf="loginForm.invalid && loginForm.touched" class="error-message">
+      Please enter valid credentials.
+    </div>
+
+    <p>Don't have an account? <a href="#">Sign Up Now</a></p>
+
+  </div>
+</div>
