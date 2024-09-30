@@ -1,0 +1,49 @@
+ 
+.fiftyWidth{
+    width: 40rem;
+ 
+}
+
+.flexcontent{
+    display: flex;
+    flex-direction: row;
+}
+.card{
+    background: var(--surface-card);
+    border: var(--card-border);
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+/* Row class */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px; /* Negative margin for spacing */
+    margin-left: -15px; /* Negative margin for spacing */
+  }
+  
+  /* Column class */
+  .col {
+    padding-right: 15px; /* Space on the right */
+    padding-left: 15px; /* Space on the left */
+    box-sizing: border-box; /* Include padding in width */
+  }
+  
+  /* Example for a 6-column layout */
+  .col-6 {
+    flex: 0 0 50%; /* Width of 50% */
+    max-width: 50%; /* Max width of 50% */
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .col-6 {
+      flex: 0 0 100%; /* Full width on smaller screens */
+      max-width: 100%; /* Full width on smaller screens */
+    }
+  }
+  .filters{
+    display: flex;
+  }

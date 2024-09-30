@@ -26,6 +26,10 @@ export class LoginComponent {
 
       this.authService.loginUser(username, password).subscribe(
         (response) => {
+          if(!response){
+            this.authService.logoutUser();
+            alert('Invalid login credentials');
+          }
            localStorage.setItem('authToken', response.token);
            localStorage.setItem('authRole', response.authRole);
            localStorage.setItem('authUserName', response.userName);

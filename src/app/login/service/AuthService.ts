@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt'; // Remove JWT_OPTIONS as it's used differently
-import { User } from '../model/User';
+import { User, UserDto } from '../model/User';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,9 @@ export class AuthService {
   loginUser(username: string, password: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/api/Authenticate/Login`, { username, password });
   }
-
+  fetchUsers(): Observable<UserDto[]> {
+    return this.http.get<UserDto[]>(`${this.apiUrl}/api/Authenticate/FetchUsers`);
+  }
   public isAuthenticated(): boolean {
     const token = localStorage.getItem('authToken');
     // Check whether the token is expired and return true or false
@@ -31,7 +33,9 @@ export class AuthService {
     return localStorage.getItem('authToken');
   }
   logoutUser(): void {
-    localStorage.removeItem('authToken'); // Remove the token from storage
+    localStorage.removeItem('authToken');  
+    localStorage.removeItem('authRole');
+    localStorage.removeItem('authUserName');
   }
   isManager():boolean {
     const tokenRole = localStorage.getItem('authRole');

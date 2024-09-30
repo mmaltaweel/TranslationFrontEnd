@@ -1,1 +1,49 @@
-<p>task-management works!</p>
+<p-toast></p-toast>
+
+<div class="card">
+    <p-table #dt [loading]="loading" [value]="tasks" [paginator]="true" [lazy]="true" [rows]="rows" [totalRecords]="totalRecords" (onLazyLoad)="getTasks($event)"
+        [globalFilterFields]="['name','country.name','representative.name','status']" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 4rem"></th>
+                <th >Project Name </th>
+                <th >Title </th>
+                <th> Description  </th>
+                <th> Due Date</th>
+                <th> Status </th>
+                <th>Action</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-task let-expanded="expanded">
+            <tr>
+                <td>
+                 </td>
+                 <td>{{task.projectName}}</td>
+                <td>{{task.title}}</td>
+                <td>{{task.description}}</td>
+                <td>{{ task.dueDate | date:'shortDate' }}</td>
+                <td>
+                    <p-tag [value]="task.statusDisplayName" [severity]="getSeverity(task.statusDisplayName)" />
+                </td>
+                <td> 
+                    <button   pTooltip="Mark task as completed" 
+                    tooltipPosition="top" pButton pRipple icon="pi pi-check" class="p-button-rounded p-button-success"
+                    (click)="markTaskAsCompleted(task)"
+                    [disabled]="task.status === 1"></button>
+                </td>
+            </tr>
+        </ng-template>
+ 
+        <ng-template pTemplate="summary">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                In total there are {{tasks ? totalRecords : 0 }} tasks.
+            </div>
+        </ng-template>
+    </p-table>
+</div> 
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

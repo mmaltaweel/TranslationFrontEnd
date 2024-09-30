@@ -2,12 +2,11 @@
     display: flex;
     position: fixed;
     left: 4rem;
-    top: 37rem;
     width: 5rem;
     height: 3rem;
     left: 2rem;
     float: left;
-    bottom: 4rem;
+    bottom: 9rem;
 }
 .logoimg{
     display: block;

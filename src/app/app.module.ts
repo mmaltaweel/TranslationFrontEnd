@@ -29,12 +29,13 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CalendarModule } from 'primeng/calendar';
 import { LoginComponent } from './login/login.component';
-import { RegisterManagerComponent } from './register-manager/register-manager.component';
-import { RegisterTranslatorComponent } from './register-translator/register-translator.component';
 import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
 import { AuthGuard } from './login/guard/AuthGuard';
 import { AuthService } from './login/service/AuthService';
 import { AuthInterceptor } from './login/interceptor/AuthInterceptor';
+import { TaskService } from './task-management/service/TaskService';
+import { ReportService } from './project-statistics/service/ReportService';
+import { ChartModule } from 'primeng/chart';
 
 
 @NgModule({
@@ -43,9 +44,7 @@ import { AuthInterceptor } from './login/interceptor/AuthInterceptor';
     ProjectManagementComponent,
     TaskManagementComponent,
     ProjectStatisticsComponent,
-    LoginComponent,
-    RegisterManagerComponent,
-    RegisterTranslatorComponent
+    LoginComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -62,6 +61,7 @@ import { AuthInterceptor } from './login/interceptor/AuthInterceptor';
     TableModule,
     CalendarModule,
     ConfirmDialogModule,
+    ChartModule,
     DialogModule,
     InputNumberModule,
     TagModule,
@@ -71,7 +71,7 @@ import { AuthInterceptor } from './login/interceptor/AuthInterceptor';
     RadioButtonModule,
     AppRoutingModule
   ],
-  providers: [ProjectService,MessageService,ConfirmationService,AuthService,
+  providers: [ReportService,TaskService,ProjectService,MessageService,ConfirmationService,AuthService,
     AuthGuard,
     {
       provide: JWT_OPTIONS,

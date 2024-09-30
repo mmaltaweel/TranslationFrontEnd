@@ -1,0 +1,43 @@
+.p-element
+.p-fluid
+.p-dialog
+.p-component
+.p-dialog-draggable
+.p-dialog-resizable
+.ng-star-inserted {
+    width: 49rem;
+    z-index: 1102;
+    height: 100rem;
+}
+
+:host ::ng-deep  .p-dialog {
+    display: flex;
+    flex-direction: column;
+    pointer-events: auto;
+    max-height: 99%;
+    transform: scale(1);
+    position: relative;
+    width: 50rem !important;
+    height: 51rem;
+}
+:host ::ng-deep  .p-field{
+  padding-bottom: 1rem;
+}
+
+:host ::ng-deep  .p-button.p-button-rounded{
+  margin-right: 0.5rem!important;
+  margin-bottom: 0.5rem!important;
+}
+
+:host ::ng-deep  .p-button.p-button-icon-only.p-button-rounded{
+  height: 2.3rem;
+}
+
+:host ::ng-deep .p-button.p-button-icon-only
+{
+  width: 2.3rem;
+}
+
+.redText{
+  color:red
+}

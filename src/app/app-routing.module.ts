@@ -5,13 +5,9 @@ import { TaskManagementComponent } from './task-management/task-management.compo
 import { ProjectStatisticsComponent } from './project-statistics/project-statistics.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './login/guard/AuthGuard';
-import { RegisterManagerComponent } from './register-manager/register-manager.component';
-import { RegisterTranslatorComponent } from './register-translator/register-translator.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: "registermanager", component: RegisterManagerComponent },
-  { path: "registerTranslator", component: RegisterTranslatorComponent },
   {
     path: 'projects',
     component: ProjectManagementComponent,

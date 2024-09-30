@@ -31,7 +31,14 @@ export class ProjectService {
       })
     });
   }
-  deleteProject(projectId: string): Observable<void> {
+  deleteProject(projectId?: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${projectId}`);
   }
+  markProjectAsCompleted(projectId?: string): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/${projectId}/status/completed`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
+  } 
 }

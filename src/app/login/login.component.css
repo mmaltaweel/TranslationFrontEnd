@@ -95,12 +95,12 @@
   .logocontainer{
     display: flex;
     position: fixed;
- 
-    top :0rem;
+    left: 4rem;
     width: 5rem;
     height: 3rem;
     left: 0rem;
     float: left;
+    bottom: 7rem;
 
 }
 .logoimg{

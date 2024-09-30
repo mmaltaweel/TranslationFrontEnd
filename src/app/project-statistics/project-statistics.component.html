@@ -1,1 +1,54 @@
-<p>project-statistics works!</p>
+<div class="row">
+  <div class="col col-12">
+    <div class="card filters">
+      <div class="col col-6">
+        <div class="col col-1">
+          <label for="assignedTranslatorId">Translator</label>
+        </div>
+
+        <p-dropdown    (onChange)="onDropdownChange($event)"    [style]="{  width: '500px' }" [options]="translators" [(ngModel)]="filter.translatorId" [checkmark]="true" optionValue="id"
+          optionLabel="userName" [showClear]="true" placeholder="Select a Translator" />
+      </div>
+      <div class="col col-6">
+        <div class="col col-1">
+          <label for="assignedTranslatorId">Projects</label>
+        </div>
+        <p-dropdown   (onChange)="onDropdownChange($event)"     [style]="{ width: '500px' }" [options]="projects" [(ngModel)]="filter.projectId" [checkmark]="true" optionValue="id"
+          optionLabel="name" [showClear]="true" placeholder="Select a Project" />
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col col-6">
+    <div *ngIf="readyTaskStatus" class="card">
+      <h3>Task Status</h3>
+      <p-chart height="300px" [options]="taskStatusChartDataOptions" type="doughnut"
+        [data]="taskStatusChartData"></p-chart>
+    </div>
+  </div>
+
+  <div class="col col-6">
+    <div *ngIf="readyCompletionTrendData" class="card">
+      <h3>Translator Breakdown</h3>
+      <p-chart height="300px" [options]="translatorBreakdownChartDataptions" type="bar"
+        [data]="translatorBreakdownChartData"></p-chart>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col col-12">
+    <div *ngIf="readyTranslatorBreakdownData" class="card">
+      <h3>Project Completion Trend</h3>
+      <p-chart height="300px" type="line" [data]="projectCompletionTrendChartData"></p-chart>
+
+    </div>
+  </div>
+
+  <div class="col col-6">
+
+  </div>
+</div>
